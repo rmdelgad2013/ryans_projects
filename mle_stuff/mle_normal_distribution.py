@@ -13,10 +13,10 @@ from scipy.optimize import minimize
 
 # Define the normal distribution
 # params:
-#   x - double; the observation in the sample/distribution
-#   sig - double; the standard deviation of the distribution; default 1 for standard normal distribution
-#   mu - double; the mean of the distribution; default 0 for standard normal distribution
-def normal_dist(x, sig, mu):
+#   params - list: contains the mean and std deviation params for the normal distribution
+#   x - NumPy array: contains the observations for the random variable X
+def normal_dist(params, x):
+    sig, mu = params
     return (1 / np.sqrt(2 * (sig ** 2) * np.pi)) * np.exp((-(x - mu) ** 2) / (2 * (sig ** 2)))
 
 
@@ -24,11 +24,15 @@ def normal_dist(x, sig, mu):
 # Define the likelihood function
 # params:
 #   x_array - 1xN ndarray; an array of the sample
-def norm_log_likelihood_function(x_array, sig, mu):
-     return np.log(np.prod([normal_dist(x, sig, mu) for x in x_array]))
+def norm_log_likelihood_function(params, x_array):
+     return np.log(np.prod([normal_dist(params, x) for x in x_array]))
 
 
-sample = np.random.normal(5, 2, 100)
+
+
 
 nll = lambda *args: -norm_log_likelihood_function(*args)
-result = minimize(nll, [4,1], args=(sig, mu))
+
+sample = np.random.normal(5, 4, 100)
+result = minimize(nll, [4,1], args=(sample))
+print(result["x"])
