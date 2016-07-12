@@ -10,22 +10,21 @@ for the Tensor Flow deep learning package). The performance of both models will 
 
 **Project structure**
 loan_prediction_project
-??? raw_data
-?   ??? Acquisition_2012Q1.txt
-?   ??? Acquisition_2012Q2.txt
-?   ??? Performance_2012Q1.txt
-?   ??? Performance_2012Q2.txt
-?   ??? ...
-??? processed_data
-?   ??? Acquisition.csv
-?   ??? Performance.csv
-?   ??? train.csv
-??? .gitignore
-??? assemble_acquisition.py
-??? README.md
-??? requirements.txt
-??? settings.py
-??? clean_performance.py
+--- raw_data
+------ Acquisition_2012Q1.txt
+------ Acquisition_2012Q2.txt
+------ Performance_2012Q1.txt
+------ Performance_2012Q2.txt
+------ ...
+--- processed_data
+------ Acquisition.csv
+------ Performance.csv
+------ train.csv
+--- assemble_acquisition.py
+--- README.md
+--- requirements.txt
+--- settings.py
+--- clean_performance.py
 
-_Note: The data files are not uploaded to the repository to save space. The raw data can be downloaded
+Note: The data files are not uploaded to the repository to save space. The raw data can be downloaded
 from their website, and the processed data can be produced by running the scripts_
