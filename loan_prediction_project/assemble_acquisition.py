@@ -1,6 +1,6 @@
 # assemble_acquisition.py
 # written by Ryan Delgado
-# This script combines the Acquisition data into one csv filee.
+# This script combines the Acquisition data into one csv file.
 
 import os
 import settings
