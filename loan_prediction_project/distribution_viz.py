@@ -77,7 +77,7 @@ def share_bar_subplot(ax, var_name, title):
 
 f, ((ax1, ax2), (ax3, ax4)) = sns.plt.subplots(2,2)
 cat_axs = [ax1, ax2, ax3, ax4]
-cat_titles = ['Channel', 'Loan Purpose', 'First Time Homebuyer', 'borrower_count']
+cat_titles = ['Channel', 'Loan Purpose', 'First Time Homebuyer', 'Borrower Count']
 
 for ax,var,title in zip(cat_axs, cat_vars, cat_titles):
     share_bar_subplot(ax,var,title)
