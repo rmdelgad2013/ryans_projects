@@ -9,7 +9,7 @@ import seaborn as sns
 
 # Read in training dataset
 train_df = pd.read_csv('%s/train.csv' % settings.PROCESSED_DIR, header=0)
-train_df = train_df[~train_df['foreclosure_status'].isnull()]
+#train_df = train_df[~train_df['foreclosure_status'].isnull()]
 
 # Produce kde pair subplots of continuous variables
 def kde_pair_subplot(ax, var_name, title):
@@ -21,15 +21,15 @@ def kde_pair_subplot(ax, var_name, title):
     ax.set_title(title)
     handles, labels = ax.get_legend_handles_labels()
     labels = ['Foreclosure', 'No Foreclosure']
-    if (ax == ax1) or (ax == ax4):
+    if (ax == ax1) or (ax == ax4) or (ax == ax5):
         ax.legend(handles, labels, loc='upper left')
     else:
         ax.legend(handles, labels)
 
-f, ((ax1, ax2), (ax3, ax4)) = sns.plt.subplots(2,2)
-kde_axs = [ax1, ax2, ax3, ax4]
-kde_vars = ['borrower_credit_score', 'interest_rate', 'balance', 'cltv']
-kde_titles = ['Borrower Credit Score', 'Interest Rate', 'Balance', 'Combined Loan-to-Value']
+f, ((ax1, ax2), (ax3, ax4), (ax5, ax6)) = sns.plt.subplots(3,2)
+kde_axs = [ax1, ax2, ax3, ax4, ax5, ax6]
+kde_vars = ['borrower_credit_score', 'interest_rate', 'balance', 'cltv', 'dti']
+kde_titles = ['Borrower Credit Score', 'Interest Rate', 'Balance', 'Combined Loan-to-Value', 'DTI']
 
 for ax,var,title in zip(kde_axs, kde_vars, kde_titles):
     kde_pair_subplot(ax, var, title)
@@ -39,7 +39,7 @@ f.set_size_inches(6, 4)
 sns.plt.show()
 
 
-cat_vars = ['channel','loan_purpose','first_time_homebuyer']
+cat_vars = ['channel','loan_purpose','first_time_homebuyer', 'borrower_count']
 groupby_frames = {}
 
 for v in cat_vars:
@@ -56,9 +56,8 @@ for v in cat_vars:
 
 # Produce count bar charts for categorical variables
 def share_bar_subplot(ax, var_name, title):
-    for tf,clr in zip([True, False],['red','blue']):
-        data = groupby_frames[var_name]
-        sns.barplot(x=var_name, y='share', hue='foreclosure_status', data=data, ax=ax)
+    data = groupby_frames[var_name]
+    sns.barplot(x=var_name, y='share', hue='foreclosure_status', data=data, ax=ax)
     sns.plt.setp(ax.get_xticklabels(), rotation=45, )
 
     # Set title and ylabel
@@ -76,9 +75,9 @@ def share_bar_subplot(ax, var_name, title):
         ax.legend(handles, labels)
 
 
-f, ((ax1), (ax2), (ax3)) = sns.plt.subplots(3,1)
-cat_axs = [ax1, ax2, ax3]
-cat_titles = ['Channel', 'Loan Purpose', 'First Time Homebuyer']
+f, ((ax1, ax2), (ax3, ax4)) = sns.plt.subplots(2,2)
+cat_axs = [ax1, ax2, ax3, ax4]
+cat_titles = ['Channel', 'Loan Purpose', 'First Time Homebuyer', 'borrower_count']
 
 for ax,var,title in zip(cat_axs, cat_vars, cat_titles):
     share_bar_subplot(ax,var,title)
