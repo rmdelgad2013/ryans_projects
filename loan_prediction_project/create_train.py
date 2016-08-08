@@ -19,5 +19,19 @@ print(train_df.isnull().sum())
 # Remove rows with missing values for cltv, borrower_count, dti, and borrower_credit_score
 train_df = train_df.dropna(subset=['cltv','borrower_count','dti','borrower_credit_score'])
 
+# Create categorical variable for single_borrower
+train_df['single_borrower'] = 'Y'
+train_df.ix[train_df['borrower_count'] > 1,'single_borrower'] = 'N'
+
+# Create categorical dummy features for each categorical variable. Add categorical features to training dataset
+categorical_vars = ['first_time_homebuyer','channel','loan_purpose', 'single_borrower', 'occupancy_status']
+
+for var in categorical_vars:
+    dum = pd.get_dummies(train_df[var], prefix=var)
+    train_df = pd.concat([train_df, dum], axis=1)
+
+# Create score/cltv feature, as suggested by the Fannie Mae 102 presentation
+train_df['score_div_cltv'] = train_df['borrower_credit_score'] / train_df['cltv']
+
 # Write to train.csv
 train_df.to_csv('%s/train.csv' % settings.PROCESSED_DIR, index=False)

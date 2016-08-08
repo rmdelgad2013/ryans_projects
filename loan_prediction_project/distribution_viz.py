@@ -39,7 +39,7 @@ f.set_size_inches(6, 4)
 sns.plt.show()
 
 
-cat_vars = ['channel','loan_purpose','first_time_homebuyer', 'borrower_count']
+cat_vars = ['channel','loan_purpose','first_time_homebuyer', 'borrower_count', 'occupancy_status']
 groupby_frames = {}
 
 for v in cat_vars:
@@ -58,7 +58,7 @@ for v in cat_vars:
 def share_bar_subplot(ax, var_name, title):
     data = groupby_frames[var_name]
     sns.barplot(x=var_name, y='share', hue='foreclosure_status', data=data, ax=ax)
-    sns.plt.setp(ax.get_xticklabels(), rotation=45, )
+    sns.plt.setp(ax.get_xticklabels(), rotation=45)
 
     # Set title and ylabel
     ax.set_title(title)
@@ -75,13 +75,12 @@ def share_bar_subplot(ax, var_name, title):
         ax.legend(handles, labels)
 
 
-f, ((ax1, ax2), (ax3, ax4)) = sns.plt.subplots(2,2)
-cat_axs = [ax1, ax2, ax3, ax4]
-cat_titles = ['Channel', 'Loan Purpose', 'First Time Homebuyer', 'Borrower Count']
+f, ((ax1, ax2), (ax3, ax4), (ax5, ax6)) = sns.plt.subplots(3,2)
+cat_axs = [ax1, ax2, ax3, ax4, ax5]
+cat_titles = ['Channel', 'Loan Purpose', 'First Time Homebuyer', 'Borrower Count', 'occupancy_status']
 
 for ax,var,title in zip(cat_axs, cat_vars, cat_titles):
     share_bar_subplot(ax,var,title)
 
-#sns.plt.figure(figsize=(4,3))
 f.subplots_adjust(hspace=0.5)
 sns.plt.show()
