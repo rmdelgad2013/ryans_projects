@@ -5,9 +5,9 @@
 
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report
-from sklearn.metrics import confusion_matrix
 from sklearn.ensemble import RandomForestClassifier
+from sklearn import metrics
+from sklearn.cross_validation import cross_val_predict
 import statsmodels.api as sm
 import settings
 
@@ -27,26 +27,29 @@ logit = sm.Logit(train_df[label], sm.add_constant(train_df[features]))
 result = logit.fit()
 result.summary()
 
-# Use train_df & sklearn to fit a LogRet model
+# Create a LogRet model, then cross validate the model on the training dataset using cross_val_predict
 logistic_model = LogisticRegression(class_weight='balanced')
-logistic_model.fit(train_df[features], train_df[label])
+logistic_predictions = cross_val_predict(logistic_model, train_df[features], train_df[label], cv=4)
 
-# Predict foreclosure_status_Y in test_df using the trained logistic model
-logit_predictions = logistic_model.predict(test_df[features])
+# Evaluate logistic regression model with accuracy score, a confusion matrix, and a classification report
+print('Logistic Regression Accuracy Score: %s' %metrics.accuracy_score(train_df[label], logistic_predictions))
 
-# Produce a classification report
-print(classification_report(logit_predictions, test_df[label]))
-print(confusion_matrix(test_df[label], logit_predictions))
+print('Logistic Regression Confusion Matrix:')
+print(metrics.confusion_matrix(train_df[label], logistic_predictions))
+
+print('Logistic Regression Classification Report:')
+print(metrics.classification_report(logistic_predictions, train_df[label]))
 
 # It looks like our logistic regression model is right about 75% of the time. Let's try a Random Forest predictive model
 # to see if we can improve our results.
+forest_model = RandomForestClassifier(max_depth=10, n_estimators=40, class_weight='balanced')
+forest_predictions = cross_val_predict(forest_model, train_df[features], train_df[label], cv=4)
 
-rf = RandomForestClassifier(max_depth=10, n_estimators=100, class_weight='balanced')
-rf.fit(train_df[features], train_df[label])
-rf_predictions = rf.predict(test_df[features])
+# Evaluate logistic regression model with accuracy score, a confusion matrix, and a classification report
+print('Random Forest Accuracy Score: %s' %metrics.accuracy_score(train_df[label], forest_predictions))
 
-print(classification_report(rf_predictions, test_df[label]))
-print(confusion_matrix(test_df[label], rf_predictions))
+print('Random Forest Confusion Matrix:')
+print(metrics.confusion_matrix(train_df[label], forest_predictions))
 
-
-
+print('Random Forest Classification Report:')
+print(metrics.classification_report(forest_predictions, train_df[label]))
