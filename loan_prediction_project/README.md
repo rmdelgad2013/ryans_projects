@@ -4,7 +4,7 @@ Loan Prediction Project
 This project explores the lona acquisition variables that predict the probability 
 of defaultuses uses machine learning algorithms to predict the probability of foreclosure given 
 attributes about the borrower. It uses the Fannie Mae Acquisition & Performance datasets available
-publicly on their website. This project will predict the probability of foreclosure using Logistic
+on their website. This project will predict the probability of foreclosure using Logistic
 Regression and Random Forests (via  Scikit-learn). The performance of both models will be compared.
 
 
@@ -24,7 +24,7 @@ Regression and Random Forests (via  Scikit-learn). The performance of both model
 
       * ...
 
-    * processed_data
+    * processed_data/
 
       * Acquisition.csv
 
