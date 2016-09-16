@@ -10,45 +10,45 @@ Regression and Random Forests (via  Scikit-learn). The performance of both model
 
 **Project structure**
 
-loan_prediction_project
+  * loan_prediction_project/
 
---- raw_data
+    * raw_data/
 
------- Acquisition_2012Q1.txt
+      *  Acquisition_2012Q1.txt
 
------- Acquisition_2012Q2.txt
+      * Acquisition_2012Q2.txt
 
------- Performance_2012Q1.txt
+      * Performance_2012Q1.txt
 
------- Performance_2012Q2.txt
+      * Performance_2012Q2.txt
 
------- ...
+      * ...
 
---- processed_data
+    * processed_data
 
------- Acquisition.csv
+      * Acquisition.csv
 
------- Performance.csv
+      * Performance.csv
 
------- train.csv
+      * train.csv
 
---- assemble_acquisition.py
+    * assemble_acquisition.py
 
---- classifier_cross_val.py
+    * classifier_cross_val.py
 
---- clean_performance.py
+    * clean_performance.py
 
---- create_train.py
+    * create_train.py
 
---- distribution_viz.py
+    * distribution_viz.py
 
---- fanniemae_prediction.ipynb
+    * fanniemae_prediction.ipynb
 
---- README.md
+    * README.md
 
---- requirements.txt
+    * requirements.txt
 
---- settings.py
+    * settings.py
 
 
 _Note: The data files are not uploaded to the repository to save space. The raw data can be downloaded
