@@ -8,5 +8,6 @@ ibrary, and are built from scratch using NumPy arrays. Each Jupyter Notebook inc
 * The algorithms for fitting & predicting
 * Examples using datasets from the sklearn.datasets module
 
-Algorithms implemented so far:
+Algorithms implemented:
 * K-Nearest Neighbors Classifier
+* Multinomial Naive Bayes Classifier
