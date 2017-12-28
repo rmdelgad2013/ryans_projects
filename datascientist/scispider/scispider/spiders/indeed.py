@@ -24,7 +24,7 @@ class IndeedSpider(scrapy.Spider):
         ROOT_URL = 'https://www.indeed.com/jobs?q=data+scientist&start={}'
         urls = [ROOT_URL.format(i * 10) for i in range(job_count // 10)]
         for url in urls:
-            yield scrapy.Request(url=url, callback=self.save_file)
+            yield scrapy.Request(url=url, callback=self.scrape_job_page)
 
 
     def scrape_job_page(self, response):
@@ -46,26 +46,29 @@ class IndeedSpider(scrapy.Spider):
 
     def save_file(self, response):
 
-        company = response.meta['company']
-        title = response.meta['title']
+        company = re.sub(r'[^\w]', '', response.meta['company'])
+        title = re.sub(r'[^\w]', '', response.meta['title'])
 
         SCRAPE_DATE = datetime.now()
         scrape_dict = {
             'scrape_date': SCRAPE_DATE.strftime('%Y-%m-%d'),
-            'body': response.body,
+            'body': response.body.decode('utf-8'),
             'job_url': response.url,
             'company': company,
             'title': title
         }
 
-        SCRAPE_PATH = '/home/ryan/PycharmProjects/datascientist/data/scraped'
+        SCRAPE_PATH = r'C:\Users\rmdelgad\Documents\repos\ryans_projects\datascientist\data\scraped'
 
-        def clean_string(string): return string.lower().replace(' ', '')
-        filename = '{company}_{jobtitle}_{date}.json'.format(company=clean_string(company),
-                                                             jobtitle=clean_string(title),
+
+        filename = '{company}_{jobtitle}_{date}.json'.format(company=company, jobtitle=title,
                                                              date=SCRAPE_DATE.strftime('%Y%m%d%H%M%S%f'))
+
         filepath = os.path.join(SCRAPE_PATH, filename)
-        with open(filepath, 'w') as f:
-            json.dump(scrape_dict, f)
+        try:
+            with open(filepath, 'w') as f:
+                json.dump(scrape_dict, f)
+        except:
+            import pdb; pdb.set_trace()
 
         print('Saved file {}'.format(filepath))
