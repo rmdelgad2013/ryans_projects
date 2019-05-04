@@ -11,3 +11,5 @@ library, and are built from scratch using mostly NumPy. Each Jupyter Notebook in
 Algorithms implemented:
 * K-Nearest Neighbors Classifier
 * Multinomial Naive Bayes Classifier
+* Linear Regression (via Gradient Descent)
+* Bagged Trees Classifier
